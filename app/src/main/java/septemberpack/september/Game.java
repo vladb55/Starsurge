@@ -14,6 +14,7 @@ public class Game extends Activity {
     View pauseBtn;
     View pauseMenu;
     RelativeLayout Rel_main_game;
+    GamePanel gamePanel;
 
     View.OnClickListener ContinueClick = new View.OnClickListener() {
         @Override
@@ -45,6 +46,9 @@ public class Game extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game);
         Rel_main_game = (RelativeLayout) findViewById(R.id.main_game_rl);
+
+        gamePanel = new GamePanel(getApplicationContext(), this);
+        Rel_main_game.addView(gamePanel);
 
         DisplayMetrics dm = new DisplayMetrics();
         this.getWindowManager().getDefaultDisplay().getMetrics(dm);
