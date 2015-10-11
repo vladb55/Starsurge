@@ -15,6 +15,7 @@ import android.widget.Button;
 public class MainMenu extends Activity {
 
     Button btn_start;
+    Button btn_exit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,14 @@ public class MainMenu extends Activity {
             {
                 Intent intent = new Intent(MainMenu.this, Game.class);
                 startActivity(intent);
+            }
+        });
+
+        btn_exit = (Button) findViewById(R.id.btnExit);
+        btn_exit.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v)
+            {
+                MainMenu.this.finish();
             }
         });
     }

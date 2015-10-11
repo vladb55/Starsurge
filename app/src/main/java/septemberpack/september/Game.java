@@ -21,6 +21,7 @@ public class Game extends Activity {
         public void onClick(View v) {
             pauseMenu.setVisibility(View.GONE);
             pauseBtn.setVisibility(View.VISIBLE);
+            gamePanel.Pause_game = false;
         }
     };
 
@@ -36,8 +37,7 @@ public class Game extends Activity {
         public void onClick(View v) {
             pauseBtn.setVisibility(View.GONE);
             pauseMenu.setVisibility(View.VISIBLE);
-
-            // pause start
+            gamePanel.Pause_game = true;
         }
     };
 
@@ -47,14 +47,16 @@ public class Game extends Activity {
         setContentView(R.layout.game);
         Rel_main_game = (RelativeLayout) findViewById(R.id.main_game_rl);
 
-        gamePanel = new GamePanel(getApplicationContext(), this);
-        Rel_main_game.addView(gamePanel);
-
         DisplayMetrics dm = new DisplayMetrics();
         this.getWindowManager().getDefaultDisplay().getMetrics(dm);
 
         final int heightS = dm.heightPixels;
         final int widthS = dm.widthPixels;
+
+        gamePanel = new GamePanel(getApplicationContext(), this, widthS);
+        Rel_main_game.addView(gamePanel);
+
+
 
         LayoutInflater myInflater = (LayoutInflater) getApplicationContext().getSystemService(getApplicationContext().LAYOUT_INFLATER_SERVICE);
         pauseBtn = myInflater.inflate(R.layout.pause, null, false);
