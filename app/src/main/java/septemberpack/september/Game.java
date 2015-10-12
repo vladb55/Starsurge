@@ -53,7 +53,7 @@ public class Game extends Activity {
         final int heightS = dm.heightPixels;
         final int widthS = dm.widthPixels;
 
-        gamePanel = new GamePanel(getApplicationContext(), this, widthS);
+        gamePanel = new GamePanel(getApplicationContext(), this, heightS);
         Rel_main_game.addView(gamePanel);
 
 

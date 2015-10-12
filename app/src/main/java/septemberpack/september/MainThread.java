@@ -16,7 +16,6 @@ public class MainThread extends Thread {
     public MainThread(SurfaceHolder holder, GamePanel gamePanel){
         this.surfaceHolder = holder;
         this.gamePanel = gamePanel;
-        dt = 0;
     }
 
     void setRunning(boolean running){
@@ -35,7 +34,7 @@ public class MainThread extends Thread {
                 try{
                     canvas = surfaceHolder.lockCanvas();
                     synchronized (surfaceHolder){
-                        gamePanel.Update(dt);
+                        gamePanel.Update();
                         gamePanel.Draw(canvas);
                     }
                 } catch(Exception ex){}
@@ -46,7 +45,6 @@ public class MainThread extends Thread {
 
 
                 long EndDraw = System.currentTimeMillis();
-                dt = (EndDraw - StartDraw)/1000.f;
             }
         }
     }

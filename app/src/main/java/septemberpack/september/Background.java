@@ -8,33 +8,27 @@ import android.graphics.Canvas;
  */
 public class Background {
 
-    Bitmap backBmp;
-    int x, y;
-    int ScreenWidth;
-    int CountBackground;
-    GamePanel root_gamePanel;
+    Bitmap bitmap;
+    int x, y, dy;
 
-    public Background(Bitmap bmp, int ScreenWidth, GamePanel gamePanel){
-        this.backBmp = bmp;
-        this.ScreenWidth = ScreenWidth;
-        this.x = 0;
-        this.y = 0;
-        CountBackground = ScreenWidth/backBmp.getWidth()+1;
-        root_gamePanel = gamePanel;
+    public Background(Bitmap bmp){
+        this.bitmap = bmp;
+        x = 0;
+        y = 0;
+        dy = -5;
     }
 
     public void draw(Canvas canvas){
-        for(int i = 0; i < CountBackground+1; i++){
-            if(canvas!=null)
-                canvas.drawBitmap(backBmp, backBmp.getWidth()*i++, y, null);
-        }
-        if(Math.abs(x)>backBmp.getWidth()){
-            x = x + backBmp.getWidth();
-        }
+        if(canvas != null)
+            canvas.drawBitmap(bitmap, x, y, null);
+        if(y < 0)
+            canvas.drawBitmap(bitmap, x, y+2800, null);
     }
 
-    public void update(float dt){
-        x = (int) (x - root_gamePanel.ShipSpeed*dt);
+    public void update(){
+        y += dy;
+        if(y < -2800)
+            y = 0;
     }
 
 }

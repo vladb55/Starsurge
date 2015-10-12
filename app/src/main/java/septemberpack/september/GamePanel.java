@@ -12,17 +12,20 @@ import android.view.SurfaceView;
  */
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
+    public static final int WIDTH = 2000;
+    public static final int HEIGHT = 2800;
+
     public MainThread thread;
     public boolean Pause_game;
     private Background background;
     public float ShipSpeed;
 
-    public GamePanel(Context context, Game game, int ScreenWidth) {
+    public GamePanel(Context context, Game game, int ScreenHeight) {
         super(context);
         getHolder().addCallback(this);
-        background = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.back_game), ScreenWidth, this);
+        background = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.back_game));
         setFocusable(true);
-        ShipSpeed = ScreenWidth/2.f;
+        ShipSpeed = ScreenHeight/2.f;
     }
 
     @Override
@@ -31,14 +34,19 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     }
 
     void Draw(Canvas canvas){
+
+        final float scaleFactorX = getWidth()/(WIDTH*1.f);
+        final float scaleFactorY = getHeight()/(HEIGHT*1.f);
+
         if(!Pause_game)
             if(canvas != null) {
+                canvas.scale(scaleFactorX, scaleFactorY);
                 background.draw(canvas);
             }
     }
 
-    void Update(float dt){
-        background.update(dt);
+    void Update(){
+        background.update();
     }
 
     @Override
@@ -58,9 +66,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         boolean retry = true;
         while(retry){
             try{
+                thread.setRunning(false);
                 thread.join();
                 retry = false;
-            } catch(Exception ex){}
+            } catch(InterruptedException ex){}
         }
     }
 }
