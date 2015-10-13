@@ -50,10 +50,7 @@ public class Game extends Activity {
         DisplayMetrics dm = new DisplayMetrics();
         this.getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-        final int heightS = dm.heightPixels;
-        final int widthS = dm.widthPixels;
-
-        gamePanel = new GamePanel(getApplicationContext(), this, heightS);
+        gamePanel = new GamePanel(this);
         Rel_main_game.addView(gamePanel);
 
 

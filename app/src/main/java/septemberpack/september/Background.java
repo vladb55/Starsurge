@@ -12,23 +12,22 @@ public class Background {
     int x, y, dy;
 
     public Background(Bitmap bmp){
-        this.bitmap = bmp;
+        bitmap = bmp;
         x = 0;
         y = 0;
-        dy = -5;
+        dy = 5;
     }
 
     public void draw(Canvas canvas){
         if(canvas != null)
             canvas.drawBitmap(bitmap, x, y, null);
-        if(y < 0)
-            canvas.drawBitmap(bitmap, x, y+2800, null);
+        if(y > 0)
+            canvas.drawBitmap(bitmap, x, y-2800, null);
     }
 
     public void update(){
-        y += dy;
-        if(y < -2800)
-            y = 0;
+        y+=dy;
+        if(y > 2800) y = 0;
     }
 
 }

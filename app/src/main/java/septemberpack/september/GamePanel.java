@@ -18,15 +18,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     public MainThread thread;
     public boolean Pause_game;
     private Background background;
-    public float ShipSpeed;
 
-    public GamePanel(Context context, Game game, int ScreenHeight) {
+    public GamePanel(Context context) {
         super(context);
         getHolder().addCallback(this);
-        background = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.back_game));
         setFocusable(true);
-        ShipSpeed = ScreenHeight/2.f;
     }
+
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -52,6 +51,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         thread = new MainThread(getHolder(), this);
+        background = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.back_game));
         thread.setRunning(true);
         thread.start();
     }

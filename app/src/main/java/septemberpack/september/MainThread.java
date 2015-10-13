@@ -11,9 +11,11 @@ public class MainThread extends Thread {
     private SurfaceHolder surfaceHolder;
     private GamePanel gamePanel;
     private boolean running;
-    private float dt;
+    public static Canvas canvas;
 
     public MainThread(SurfaceHolder holder, GamePanel gamePanel){
+
+        super();
         this.surfaceHolder = holder;
         this.gamePanel = gamePanel;
     }
@@ -24,7 +26,7 @@ public class MainThread extends Thread {
 
     @Override
     public void run(){
-        Canvas canvas;
+
 
         while(running){
             if(!gamePanel.Pause_game){
@@ -40,7 +42,9 @@ public class MainThread extends Thread {
                 } catch(Exception ex){}
                 finally {
                     if(canvas != null)
-                        surfaceHolder.unlockCanvasAndPost(canvas);
+                        try {
+                            surfaceHolder.unlockCanvasAndPost(canvas);
+                        } catch(Exception e){}
                 }
 
 
