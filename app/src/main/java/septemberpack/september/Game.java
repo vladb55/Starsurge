@@ -7,12 +7,17 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 public class Game extends Activity {
 
     View pauseBtn;
     View pauseMenu;
+    View leftBtn;
+    View rightBtn;
+    View ship;
+    float X;
     RelativeLayout Rel_main_game;
     GamePanel gamePanel;
 
@@ -41,6 +46,22 @@ public class Game extends Activity {
         }
     };
 
+    View.OnClickListener LeftClick = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            moveLeft();
+        }
+    };
+
+    View.OnClickListener RightClick = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            moveRight();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,14 +71,14 @@ public class Game extends Activity {
         DisplayMetrics dm = new DisplayMetrics();
         this.getWindowManager().getDefaultDisplay().getMetrics(dm);
 
+        X = dm.widthPixels/2;
+
         gamePanel = new GamePanel(this);
         Rel_main_game.addView(gamePanel);
 
-
-
         LayoutInflater myInflater = (LayoutInflater) getApplicationContext().getSystemService(getApplicationContext().LAYOUT_INFLATER_SERVICE);
         pauseBtn = myInflater.inflate(R.layout.pause, null, false);
-        pauseBtn.setX(0); // width-250 (width - btn.size)
+        pauseBtn.setX(0);
         pauseBtn.setY(0);
 
         Rel_main_game.addView(pauseBtn);
@@ -75,5 +96,37 @@ public class Game extends Activity {
         btnContinue.setOnClickListener(ContinueClick);
         btnGoMain.setOnClickListener(GoMainClick);
         pauseBtn.setOnClickListener(PauseClick);
+
+        leftBtn = myInflater.inflate(R.layout.turn_left, null, false);
+        leftBtn.setX(0);
+        leftBtn.setY(dm.heightPixels-100);
+        Rel_main_game.addView(leftBtn);
+        leftBtn.getLayoutParams().height=100;
+        leftBtn.getLayoutParams().width=100;
+
+        rightBtn = myInflater.inflate(R.layout.turn_right, null, false);
+        rightBtn.setX(dm.widthPixels-100);
+        rightBtn.setY(dm.heightPixels-100);
+        Rel_main_game.addView(rightBtn);
+        rightBtn.getLayoutParams().height=100;
+        rightBtn.getLayoutParams().width=100;
+
+        leftBtn.setOnClickListener(LeftClick);
+        rightBtn.setOnClickListener(RightClick);
+
+        ship = myInflater.inflate(R.layout.ship, null, false);
+        ship.setX(X);
+        ship.setY(dm.heightPixels-300);
+        Rel_main_game.addView(ship);
+        ship.getLayoutParams().height=80;
+        ship.getLayoutParams().width=80;
+    }
+
+    public void moveLeft(){
+        ship.setX(X -= 40);
+    }
+
+    public void moveRight(){
+        ship.setX(X += 40);
     }
 }
