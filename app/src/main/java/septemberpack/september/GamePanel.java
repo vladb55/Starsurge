@@ -25,6 +25,29 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         setFocusable(true);
     }
 
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return super.onTouchEvent(event);
+    }
+
+    void Draw(Canvas canvas){
+
+        final float scaleFactorX = getWidth()/(WIDTH*1.f);
+        final float scaleFactorY = getHeight()/(HEIGHT*1.f);
+
+        if(!Pause_game)
+            if(canvas != null) {
+                canvas.scale(scaleFactorX, scaleFactorY);
+                background.draw(canvas);
+            }
+    }
+
+    void Update(){
+        background.update();
+    }
+
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         thread = new MainThread(getHolder(), this);
@@ -49,27 +72,4 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
             } catch(InterruptedException ex){}
         }
     }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return super.onTouchEvent(event);
-    }
-
-    void Update(){
-        background.update();
-    }
-
-    void Draw(Canvas canvas){
-
-        final float scaleFactorX = getWidth()/(WIDTH*1.f);
-        final float scaleFactorY = getHeight()/(HEIGHT*1.f);
-
-        if(!Pause_game)
-            if(canvas != null) {
-                canvas.scale(scaleFactorX, scaleFactorY);
-                background.draw(canvas);
-            }
-    }
-
-
 }
