@@ -2,6 +2,7 @@ package septemberpack.september;
 
 
 import android.app.Activity;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ public class Game extends Activity {
     float X, MAX_WIDTH;
     RelativeLayout Rel_main_game;
     GamePanel gamePanel;
+    MediaPlayer fonSong;
 
     View.OnClickListener ContinueClick = new View.OnClickListener() {
         @Override
@@ -32,6 +34,7 @@ public class Game extends Activity {
     View.OnClickListener GoMainClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            fonSong.reset();
             Game.this.finish();
         }
     };
@@ -65,6 +68,7 @@ public class Game extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game);
+
         Rel_main_game = (RelativeLayout) findViewById(R.id.main_game_rl);
 
         DisplayMetrics dm = new DisplayMetrics();
@@ -99,7 +103,7 @@ public class Game extends Activity {
 
         leftBtn = myInflater.inflate(R.layout.turn_left, null, false);
         leftBtn.setX(0);
-        leftBtn.setY(dm.heightPixels-100);
+        leftBtn.setY(dm.heightPixels - 100);
         Rel_main_game.addView(leftBtn);
         leftBtn.getLayoutParams().height=100;
         leftBtn.getLayoutParams().width=100;
@@ -120,6 +124,10 @@ public class Game extends Activity {
         Rel_main_game.addView(ship);
         ship.getLayoutParams().height=80;
         ship.getLayoutParams().width=80;
+
+        fonSong = MediaPlayer.create(Game.this, R.raw.fonsong);
+        fonSong.start();
+        fonSong.setLooping(true);
     }
 
     public void moveLeft(){
