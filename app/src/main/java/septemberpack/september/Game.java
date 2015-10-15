@@ -7,7 +7,6 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 public class Game extends Activity {
@@ -17,7 +16,7 @@ public class Game extends Activity {
     View leftBtn;
     View rightBtn;
     View ship;
-    float X;
+    float X, MAX_WIDTH;
     RelativeLayout Rel_main_game;
     GamePanel gamePanel;
 
@@ -72,6 +71,7 @@ public class Game extends Activity {
         this.getWindowManager().getDefaultDisplay().getMetrics(dm);
 
         X = dm.widthPixels/2;
+        MAX_WIDTH = dm.widthPixels - 100;
 
         gamePanel = new GamePanel(this);
         Rel_main_game.addView(gamePanel);
@@ -123,10 +123,14 @@ public class Game extends Activity {
     }
 
     public void moveLeft(){
+        if(X <= 0) X = 0;
+        else
         ship.setX(X -= 40);
     }
 
     public void moveRight(){
+        if(X >= (MAX_WIDTH)) X = MAX_WIDTH - 20;
+        else
         ship.setX(X += 40);
     }
 }
