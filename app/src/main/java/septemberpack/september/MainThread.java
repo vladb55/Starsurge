@@ -10,8 +10,8 @@ public class MainThread extends Thread {
 
     private SurfaceHolder surfaceHolder;
     private GamePanel gamePanel;
-    private boolean running;
-    public static Canvas canvas;
+    private boolean running; // Флаг, если true - поток работает, если false - поток завершен
+    public static Canvas canvas; // Класс-полотно, предоставляющий методы для рисования
 
     public MainThread(SurfaceHolder holder, GamePanel gamePanel){
 
@@ -20,20 +20,22 @@ public class MainThread extends Thread {
         this.gamePanel = gamePanel;
     }
 
+    // Метод установки флага потока в активное состояние
     void setRunning(boolean running){
         this.running = running;
     }
 
+    // Метод, выполняющийся в потоке
     @Override
     public void run(){
 
 
         while(running){
-            if(!gamePanel.Pause_game){
-                long StartDraw = System.currentTimeMillis();
+            if(!gamePanel.Pause_game){ // Если не пауза, то работаем
 
                 canvas = null;
                 try{
+                    // Получаем объект canvas и выполняем отрисовку
                     canvas = surfaceHolder.lockCanvas();
                     synchronized (surfaceHolder){
                         gamePanel.Update();
@@ -43,12 +45,11 @@ public class MainThread extends Thread {
                 finally {
                     if(canvas != null)
                         try {
+                            // Отрисовка выполнена. Выводим результат на экран
                             surfaceHolder.unlockCanvasAndPost(canvas);
                         } catch(Exception e){}
                 }
 
-
-                long EndDraw = System.currentTimeMillis();
             }
         }
     }

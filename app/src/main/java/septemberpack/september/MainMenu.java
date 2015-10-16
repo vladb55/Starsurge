@@ -21,11 +21,12 @@ public class MainMenu extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        btn_start = (Button) findViewById(R.id.btn_start);
+        btn_start = (Button) findViewById(R.id.btn_start); // Кнопка старт игры
+        // Слушатель для кнопки старта
         btn_start.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v)
             {
-                Intent intent = new Intent(MainMenu.this, Game.class);
+                Intent intent = new Intent(MainMenu.this, Game.class); // Интент для перехода с меню в игру
                 startActivity(intent);
             }
         });
