@@ -37,6 +37,7 @@ public class Game extends Activity {
         @Override
         public void onClick(View v) {
             fonSong.reset();
+            gamePanel.thread.setRunning(false);
             Game.this.finish();
         }
     };

@@ -12,8 +12,8 @@ import android.view.SurfaceView;
  */
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
-    public static final int WIDTH = 2000; // Ширина фона
-    public static final int HEIGHT = 2800; // Высота фона
+    public static final int WIDTH = 1000; // Ширина фона
+    public static final int HEIGHT = 1400; // Высота фона
 
     public MainThread thread; // Поток для отрисовки игрового процесса
     public boolean Pause_game; // Флаг для проверки не стоит ли пауза
@@ -54,7 +54,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         thread = new MainThread(getHolder(), this);
-        background = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.back_game));
+        background = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.background_game));
         thread.setRunning(true);
         thread.start();
     }
@@ -70,7 +70,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         boolean retry = true;
         while(retry){
             try{
-                thread.setRunning(false);
                 thread.join();
                 retry = false;
             } catch(InterruptedException ex){}

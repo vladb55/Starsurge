@@ -15,7 +15,7 @@ public class Background {
         bitmap = bmp;
         x = 0;
         y = 0;
-        dy = 5;
+        dy = 50;
     }
 
     // Рисуем фон. При смещении (изменении) y в методе update,
@@ -27,13 +27,13 @@ public class Background {
         if(canvas != null)
             canvas.drawBitmap(bitmap, x, y, null);
         if(y > 0)
-            canvas.drawBitmap(bitmap, x, y-2800, null);
+            canvas.drawBitmap(bitmap, x, y-1400, null);
     }
 
     // Изменение координаты y
     public void update(){
         y+=dy;
-        if(y > 2800) y = 0; // Если y больше размера фона, то рисуем фон по координатам (0, 0).
+        if(y > 1400) y = 0; // Если y больше размера фона, то рисуем фон по координатам (0, 0).
         // Иначе нет смысла рисовать фон за пределами экрана
     }
 
