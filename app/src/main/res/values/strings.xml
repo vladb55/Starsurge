@@ -1,10 +1,4 @@
 <resources>
-    <string name="app_name">September</string>
-
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">Colision</string>
     <string name="action_settings">Settings</string>
-    <string name="str_btn_start">New game</string>
-    <string name="str_btn_continue">Continue</string>
-    <string name="str_btn_mainMenu">Main menu</string>
-    <string name="str_btn_exit">Exit</string>
 </resources>
