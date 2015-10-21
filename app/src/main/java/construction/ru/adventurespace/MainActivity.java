@@ -20,26 +20,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        buttonLeft=(Button) findViewById(R.id.BLeft);
-        buttonRight=(Button) findViewById(R.id.BRight);
-        im=(ImageView) findViewById(R.id.fregat);
-        View.OnClickListener OnClick=new View.OnClickListener() {
-            float X;
-            @Override
-            public void onClick(View v) {
-                switch (v.getId())
-                {
-                    case R.id.BLeft:
-                        im.setTranslationX(X-=5);
-                        break;
-                    case R.id.BRight:
-                        im.setTranslationX(X+=5);
-                        break;
-                }
-            }
-        };
-        buttonLeft.setOnClickListener(OnClick);
-        buttonRight.setOnClickListener(OnClick);
     }
 
     @Override
