@@ -1,4 +1,4 @@
-package construction.ru.colision;
+package construction.ru.adventurespace;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -1,4 +1,10 @@
 <resources>
-    <string name="app_name">Colision</string>
+    <string name="app_name">AdventureSpace</string>
+
+    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="buttonsright"><![CDATA[>]]></string>
+    <string name="btnleft"><![CDATA[<]]></string>
+    <string name="left"><![CDATA[<]]></string>
+    <string name="right"><![CDATA[>]]></string>
 </resources>
