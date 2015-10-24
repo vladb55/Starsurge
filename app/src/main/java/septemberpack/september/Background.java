@@ -15,7 +15,7 @@ public class Background {
         bitmap = bmp;
         x = 0;
         y = 0;
-        dy = 50;
+        dy = GamePanel.speed;
     }
 
     // Рисуем фон. При смещении (изменении) y в методе update,

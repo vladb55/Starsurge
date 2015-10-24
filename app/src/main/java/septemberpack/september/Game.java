@@ -20,15 +20,18 @@ public class Game extends Activity {
     float X, MAX_WIDTH; // Стартовая координата корабля, максимальная ширина окна
     RelativeLayout Rel_main_game; // Основной лэйаут, на котором происходит игра
     GamePanel gamePanel; // Объект класса GamePanel
-    MediaPlayer fonSong; // Объект для запуска музыки в игре
+    //MediaPlayer fonSong; // Объект для запуска музыки в игре
 
     // Обработчик нажатия на кнопку продолжить
     View.OnClickListener ContinueClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            pauseMenu.setVisibility(View.GONE);
-            pauseBtn.setVisibility(View.VISIBLE);
-            gamePanel.Pause_game = false;
+            pauseMenu.setVisibility(View.GONE); // Прячем меню паузы
+            pauseBtn.setVisibility(View.VISIBLE); // Показываем кнопку паузы
+            ship.setVisibility(View.VISIBLE); // Показываем корабль
+            leftBtn.setVisibility(View.VISIBLE); // Показываем кнопку влево
+            rightBtn.setVisibility(View.VISIBLE); // Показываем кнопку вправо
+            gamePanel.Pause_game = false; // Флаг паузы на ноль - игра продолжается
         }
     };
 
@@ -36,9 +39,9 @@ public class Game extends Activity {
     View.OnClickListener GoMainClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            fonSong.reset();
-            gamePanel.thread.setRunning(false);
-            Game.this.finish();
+            //fonSong.reset(); // Стопаем музыку
+            gamePanel.thread.setRunning(false); // Стопаем поток
+            Game.this.finish(); // Стопаем активити
         }
     };
 
@@ -46,9 +49,12 @@ public class Game extends Activity {
     View.OnClickListener PauseClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            pauseBtn.setVisibility(View.GONE);
-            pauseMenu.setVisibility(View.VISIBLE);
-            gamePanel.Pause_game = true;
+            pauseBtn.setVisibility(View.GONE); // Прячем кнопку паузы
+            ship.setVisibility(View.GONE); // Прячем корабль
+            leftBtn.setVisibility(View.GONE); // Прячем кнопку влево
+            rightBtn.setVisibility(View.GONE); // Прячем кнопку вправо
+            pauseMenu.setVisibility(View.VISIBLE); // Показывает меню паузы
+            gamePanel.Pause_game = true; // Ставим игру на стоп
         }
     };
 
@@ -141,9 +147,9 @@ public class Game extends Activity {
         ship.getLayoutParams().width=80;
 
         // Музыка в игре
-        fonSong = MediaPlayer.create(Game.this, R.raw.fonsong);
-        fonSong.start();
-        fonSong.setLooping(true);
+        //fonSong = MediaPlayer.create(Game.this, R.raw.fonsong);
+        //fonSong.start();
+        //fonSong.setLooping(true);
     }
 
     // Метод движения влево

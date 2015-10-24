@@ -18,6 +18,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     public MainThread thread; // Поток для отрисовки игрового процесса
     public boolean Pause_game; // Флаг для проверки не стоит ли пауза
     private Background background; // Объект для обращения к фону
+    private Asteroid asteroid; // Объект для обращения к астероиду
+    public static int speed = 10; // Скорость движение
 
     public GamePanel(Context context) {
         super(context);
@@ -42,12 +44,15 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
             if(canvas != null) {
                 canvas.scale(scaleFactorX, scaleFactorY);
                 background.draw(canvas);
+                asteroid.draw(canvas);
             }
     }
 
     // Вызов метода update в классе Background, который обновляет координаты фона
     void Update(){
         background.update();
+        asteroid.update();
+
     }
 
     // Начало выполнения отрисовки. Инициализируем поток, загружаем фон, стартуем поток отрисовки
@@ -55,6 +60,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     public void surfaceCreated(SurfaceHolder holder) {
         thread = new MainThread(getHolder(), this);
         background = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.background_game));
+        asteroid = new Asteroid(BitmapFactory.decodeResource(getResources(), R.drawable.asteroid80px));
         thread.setRunning(true);
         thread.start();
     }
