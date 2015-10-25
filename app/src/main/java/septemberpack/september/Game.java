@@ -20,7 +20,7 @@ public class Game extends Activity {
     float X, MAX_WIDTH; // Стартовая координата корабля, максимальная ширина окна
     RelativeLayout Rel_main_game; // Основной лэйаут, на котором происходит игра
     GamePanel gamePanel; // Объект класса GamePanel
-    //MediaPlayer fonSong; // Объект для запуска музыки в игре
+    MediaPlayer fonSong; // Объект для запуска музыки в игре
 
     // Обработчик нажатия на кнопку продолжить
     View.OnClickListener ContinueClick = new View.OnClickListener() {
@@ -39,7 +39,7 @@ public class Game extends Activity {
     View.OnClickListener GoMainClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //fonSong.reset(); // Стопаем музыку
+            fonSong.reset(); // Стопаем музыку
             gamePanel.thread.setRunning(false); // Стопаем поток
             Game.this.finish(); // Стопаем активити
         }
@@ -147,9 +147,9 @@ public class Game extends Activity {
         ship.getLayoutParams().width=80;
 
         // Музыка в игре
-        //fonSong = MediaPlayer.create(Game.this, R.raw.fonsong);
-        //fonSong.start();
-        //fonSong.setLooping(true);
+        fonSong = MediaPlayer.create(Game.this, R.raw.fonsong);
+        fonSong.start();
+        fonSong.setLooping(true);
     }
 
     // Метод движения влево

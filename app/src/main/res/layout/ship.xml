@@ -6,5 +6,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ship_imageView"
-        android:src="@drawable/ship" />
+        android:src="@drawable/shuttle" />
 </RelativeLayout>
