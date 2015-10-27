@@ -14,12 +14,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 public class MainActivity extends Activity {
-    Button buttonLeft,buttonRight;
-    ImageView im;
+    ImageView im, im2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        im=(ImageView) findViewById(R.id.meteor);
+        im2=(ImageView) findViewById(R.id.meteor2);
+        for(float i=0;i<100;i++){
+            im.setTranslationY(i);
+        }
     }
 
     @Override
