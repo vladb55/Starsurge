@@ -6,6 +6,9 @@ import android.graphics.Canvas;
 /**
  * Created by Vlady on 22.10.2015.
  */
+
+// Данный класс реализует отрисовку астероидов
+
 public class Asteroid {
 
     Bitmap bitmap; // Картинка астероида

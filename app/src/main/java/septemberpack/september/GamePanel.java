@@ -10,6 +10,15 @@ import android.view.SurfaceView;
 /**
  * Created by Vlady on 10.10.2015.
  */
+
+// Данный класс содержит методы отрисовки графики в игре
+// Особенность класса SurfaceView, от которого наследован наш класс, заключается в том, что он предоставляет
+// отдельную область для рисования, действия с которой должны быть вынесены в отдельный
+// поток приложения (класс MainThread)
+// Также, GamePanel реализует интерфейс SurfaceHolder.Callback
+// Этот интерфейс предлагает реализовать три метода: surfaceCreated(), surfaceChanged() и surfaceDestroyed()
+// вызываемые соответственно при создании области для рисования, ее изменении и разрушении.
+
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
     public static final int WIDTH = 1000; // Ширина фона

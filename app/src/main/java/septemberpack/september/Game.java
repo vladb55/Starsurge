@@ -10,6 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
+// Класс игры, в котором содержатся основные компоненты игры
+// Данный класс содержит лэйаут, на котором собраны все отображаемые компоненты, такие как
+// кнопка паузы, меню паузы, кнопки управления кораблем, добавление объекта класса GamePanel
+// для отображения графики
+
 public class Game extends Activity {
 
     View pauseBtn; // View кнопки пауза

@@ -6,6 +6,9 @@ import android.graphics.Canvas;
 /**
  * Created by Vlady on 11.10.2015.
  */
+
+// Данный класс реализует отрисовку фона игры
+
 public class Background {
 
     Bitmap bitmap; // Объект нашего фона - картинка

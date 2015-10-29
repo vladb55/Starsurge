@@ -6,6 +6,9 @@ import android.view.SurfaceHolder;
 /**
  * Created by Vlady on 10.10.2015.
  */
+
+// Данный класс представляет собой отдельный поток отрисовки
+
 public class MainThread extends Thread {
 
     private SurfaceHolder surfaceHolder;

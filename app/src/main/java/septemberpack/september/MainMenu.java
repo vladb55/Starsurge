@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+// Класс главного меню, содержит кнопку старта и ее слушателя
 
 public class MainMenu extends Activity {
 
