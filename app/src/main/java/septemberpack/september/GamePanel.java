@@ -3,6 +3,7 @@ package septemberpack.september;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.media.MediaPlayer;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -29,6 +30,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     private Background background; // Объект для обращения к фону
     private Asteroid asteroid; // Объект для обращения к астероиду
     public static int speed = 10; // Скорость движение
+
 
     public GamePanel(Context context) {
         super(context);
@@ -61,13 +63,15 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     void Update(){
         background.update();
         asteroid.update();
-
     }
 
     // Начало выполнения отрисовки. Инициализируем поток, загружаем фон, стартуем поток отрисовки
+    // Воспроизводим музыку
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         thread = new MainThread(getHolder(), this);
+        Game.fonSong.start();
+        Game.fonSong.setLooping(true);
         background = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.background_game));
         asteroid = new Asteroid(BitmapFactory.decodeResource(getResources(), R.drawable.asteroid80px));
         thread.setRunning(true);
@@ -80,12 +84,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     }
 
     // Метод вызывающийся при выходе из игры в главное меню, конец выполнения отрисовки
+    // Прерываем музыку
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         boolean retry = true;
         while(retry){
             try{
                 thread.join();
+                Game.fonSong.reset();
                 retry = false;
             } catch(InterruptedException ex){}
         }

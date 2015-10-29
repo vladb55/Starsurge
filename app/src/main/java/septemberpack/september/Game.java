@@ -25,7 +25,7 @@ public class Game extends Activity {
     float X, MAX_WIDTH; // Стартовая координата корабля, максимальная ширина окна
     RelativeLayout Rel_main_game; // Основной лэйаут, на котором происходит игра
     GamePanel gamePanel; // Объект класса GamePanel
-    MediaPlayer fonSong; // Объект для запуска музыки в игре
+    public static MediaPlayer fonSong; // Объект для запуска музыки в игре
 
     // Обработчик нажатия на кнопку продолжить
     View.OnClickListener ContinueClick = new View.OnClickListener() {
@@ -40,11 +40,10 @@ public class Game extends Activity {
         }
     };
 
-    // Обработчик нажатия на кнопку пауза
+    // Обработчик нажатия на кнопку главное меню
     View.OnClickListener GoMainClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            fonSong.reset(); // Стопаем музыку
             gamePanel.thread.setRunning(false); // Стопаем поток
             Game.this.finish(); // Стопаем активити
         }
@@ -126,18 +125,18 @@ public class Game extends Activity {
         // Кнопка влево
         leftBtn = myInflater.inflate(R.layout.turn_left, null, false);
         leftBtn.setX(0);
-        leftBtn.setY(dm.heightPixels - 100);
+        leftBtn.setY(dm.heightPixels - 150);
         Rel_main_game.addView(leftBtn);
-        leftBtn.getLayoutParams().height=100;
-        leftBtn.getLayoutParams().width=100;
+        leftBtn.getLayoutParams().height=150;
+        leftBtn.getLayoutParams().width=150;
 
         // Кнопка вправо
         rightBtn = myInflater.inflate(R.layout.turn_right, null, false);
-        rightBtn.setX(dm.widthPixels-100);
-        rightBtn.setY(dm.heightPixels-100);
+        rightBtn.setX(dm.widthPixels-150);
+        rightBtn.setY(dm.heightPixels-150);
         Rel_main_game.addView(rightBtn);
-        rightBtn.getLayoutParams().height=100;
-        rightBtn.getLayoutParams().width=100;
+        rightBtn.getLayoutParams().height=150;
+        rightBtn.getLayoutParams().width=150;
 
         // Добавляем слушателей
         leftBtn.setOnClickListener(LeftClick);
@@ -151,10 +150,8 @@ public class Game extends Activity {
         ship.getLayoutParams().height=80;
         ship.getLayoutParams().width=80;
 
-        // Музыка в игре
+        // Инициализируем объект для музыки
         fonSong = MediaPlayer.create(Game.this, R.raw.fonsong);
-        fonSong.start();
-        fonSong.setLooping(true);
     }
 
     // Метод движения влево

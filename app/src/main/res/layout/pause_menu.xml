@@ -10,21 +10,21 @@
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/str_btn_continue"
             android:id="@+id/btnContinue"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            android:layout_margin="20dp"
-            android:textSize="36sp" />
+            android:layout_margin="50dp"
+            android:textSize="36sp"
+            android:background="@drawable/continue_btn_image" />
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/str_btn_mainMenu"
             android:id="@+id/btnGoMain"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            android:layout_margin="20dp"
-            android:textSize="36sp" />
+            android:layout_margin="50dp"
+            android:textSize="36sp"
+            android:background="@drawable/menu_btn_image" />
     </LinearLayout>
 </RelativeLayout>
