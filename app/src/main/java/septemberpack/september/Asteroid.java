@@ -16,14 +16,18 @@ public class Asteroid {
     private int x; // Координата по x
     private int y; // Координата по y
     private Random random;
+    //Bitmap[] asteroids;
 
     public Asteroid(Bitmap bmp){
         this.bitmap = bmp;
         random = new Random();
+
+        //asteroids = new Bitmap[10];
     }
 
     public void draw(Canvas canvas){
 
+        //for(int i = 0; i < asteroids.length; i++)
         canvas.drawBitmap(bitmap, 500, y, null);
     }
 

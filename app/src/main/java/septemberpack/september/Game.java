@@ -106,8 +106,8 @@ public class Game extends Activity {
         pauseBtn.setX(0);
         pauseBtn.setY(0);
         Rel_main_game.addView(pauseBtn);
-        pauseBtn.getLayoutParams().height=250;
-        pauseBtn.getLayoutParams().width=250;
+        pauseBtn.getLayoutParams().height = 200;
+        pauseBtn.getLayoutParams().width = 200;
 
         // Меню паузы
         pauseMenu = myInflater.inflate(R.layout.pause_menu, null, false);

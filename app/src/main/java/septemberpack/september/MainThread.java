@@ -32,7 +32,6 @@ public class MainThread extends Thread {
     @Override
     public void run(){
 
-
         while(running){
             if(!gamePanel.Pause_game){ // Если не пауза, то работаем
 

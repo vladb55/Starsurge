@@ -3,7 +3,6 @@ package septemberpack.september;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.media.MediaPlayer;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -31,14 +30,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     private Asteroid asteroid; // Объект для обращения к астероиду
     public static int speed = 10; // Скорость движение
 
-
     public GamePanel(Context context) {
         super(context);
         getHolder().addCallback(this);
         setFocusable(true);
     }
-
-
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -72,8 +68,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         thread = new MainThread(getHolder(), this);
         Game.fonSong.start();
         Game.fonSong.setLooping(true);
-        background = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.background_game));
-        asteroid = new Asteroid(BitmapFactory.decodeResource(getResources(), R.drawable.asteroid80px));
+        background = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.sky));
+        asteroid = new Asteroid(BitmapFactory.decodeResource(getResources(), R.drawable.asteroid120px));
         thread.setRunning(true);
         thread.start();
     }
