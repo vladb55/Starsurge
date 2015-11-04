@@ -104,7 +104,7 @@ public class Game extends Activity {
         // Кнопка паузы
         pauseBtn = myInflater.inflate(R.layout.pause, null, false);
         pauseBtn.setX(0);
-        pauseBtn.setY(0);
+        pauseBtn.setY(-50);
         Rel_main_game.addView(pauseBtn);
         pauseBtn.getLayoutParams().height = 200;
         pauseBtn.getLayoutParams().width = 200;
@@ -127,16 +127,16 @@ public class Game extends Activity {
         leftBtn.setX(0);
         leftBtn.setY(dm.heightPixels - 150);
         Rel_main_game.addView(leftBtn);
-        leftBtn.getLayoutParams().height=150;
-        leftBtn.getLayoutParams().width=150;
+        leftBtn.getLayoutParams().height = 150;
+        leftBtn.getLayoutParams().width = 150;
 
         // Кнопка вправо
         rightBtn = myInflater.inflate(R.layout.turn_right, null, false);
-        rightBtn.setX(dm.widthPixels-150);
-        rightBtn.setY(dm.heightPixels-150);
+        rightBtn.setX(dm.widthPixels - 150);
+        rightBtn.setY(dm.heightPixels - 150);
         Rel_main_game.addView(rightBtn);
-        rightBtn.getLayoutParams().height=150;
-        rightBtn.getLayoutParams().width=150;
+        rightBtn.getLayoutParams().height = 150;
+        rightBtn.getLayoutParams().width = 150;
 
         // Добавляем слушателей
         leftBtn.setOnClickListener(LeftClick);
@@ -145,10 +145,10 @@ public class Game extends Activity {
         // Корабль
         ship = myInflater.inflate(R.layout.ship, null, false);
         ship.setX(X);
-        ship.setY(dm.heightPixels-300);
+        ship.setY(dm.heightPixels - 300);
         Rel_main_game.addView(ship);
-        ship.getLayoutParams().height=80;
-        ship.getLayoutParams().width=80;
+        ship.getLayoutParams().height = 80;
+        ship.getLayoutParams().width = 80;
 
         // Инициализируем объект для музыки
         fonSong = MediaPlayer.create(Game.this, R.raw.fonsong);
