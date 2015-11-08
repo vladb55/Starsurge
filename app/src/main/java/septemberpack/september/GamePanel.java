@@ -3,6 +3,7 @@ package septemberpack.september;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -11,13 +12,14 @@ import android.view.SurfaceView;
  * Created by Vlady on 10.10.2015.
  */
 
-// Данный класс содержит методы отрисовки графики в игре
-// Особенность класса SurfaceView, от которого наследован наш класс, заключается в том, что он предоставляет
-// отдельную область для рисования, действия с которой должны быть вынесены в отдельный
-// поток приложения (класс MainThread)
-// Также, GamePanel реализует интерфейс SurfaceHolder.Callback
-// Этот интерфейс предлагает реализовать три метода: surfaceCreated(), surfaceChanged() и surfaceDestroyed()
-// вызываемые соответственно при создании области для рисования, ее изменении и разрушении.
+/* Данный класс содержит методы отрисовки графики в игре
+* Особенность класса SurfaceView, от которого наследован наш класс, заключается в том, что он предоставляет
+* отдельную область для рисования, действия с которой должны быть вынесены в отдельный
+* поток приложения (класс MainThread)
+* Также, GamePanel реализует интерфейс SurfaceHolder.Callback
+* Этот интерфейс предлагает реализовать три метода: surfaceCreated(), surfaceChanged() и surfaceDestroyed()
+* вызываемые соответственно при создании области для рисования, ее изменении и разрушении.
+*/
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
@@ -27,8 +29,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     public MainThread thread; // Поток для отрисовки игрового процесса
     public boolean Pause_game; // Флаг для проверки не стоит ли пауза
     private Background background; // Объект для обращения к фону
-    private Asteroid asteroid; // Объект для обращения к астероиду
+    private Asteroid asteroid; // Объект для обращения к классу астероида
     public static int speed = 10; // Скорость движение
+    private Player player;
 
     public GamePanel(Context context) {
         super(context);
@@ -41,7 +44,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         return super.onTouchEvent(event);
     }
 
-    // Метод для рисования фона
     void Draw(Canvas canvas){
 
         final float scaleFactorX = getWidth()/(WIDTH*1.f); // Подстраивание фона под размер экрана по ширине
@@ -52,17 +54,19 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
                 canvas.scale(scaleFactorX, scaleFactorY);
                 background.draw(canvas);
                 asteroid.draw(canvas);
+                player.draw(canvas);
             }
     }
 
-    // Вызов метода update в классе Background, который обновляет координаты фона
     void Update(){
         background.update();
         asteroid.update();
+        player.update();
+        if(collision()){
+            Pause_game = true;
+        }
     }
 
-    // Начало выполнения отрисовки. Инициализируем поток, загружаем фон, стартуем поток отрисовки
-    // Воспроизводим музыку
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         thread = new MainThread(getHolder(), this);
@@ -70,6 +74,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         Game.fonSong.setLooping(true);
         background = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.sky));
         asteroid = new Asteroid(BitmapFactory.decodeResource(getResources(), R.drawable.asteroid120px));
+        player = new Player(BitmapFactory.decodeResource(getResources(), R.drawable.ship));
         thread.setRunning(true);
         thread.start();
     }
@@ -79,8 +84,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
     }
 
-    // Метод вызывающийся при выходе из игры в главное меню, конец выполнения отрисовки
-    // Прерываем музыку
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         boolean retry = true;
@@ -91,5 +94,18 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
                 retry = false;
             } catch(InterruptedException ex){}
         }
+    }
+
+    public boolean collision(){
+        if(Rect.intersects(player.getShip(), asteroid.getAsteroid1())) {
+            return true;
+        }
+        else if(Rect.intersects(player.getShip(), asteroid.getAsteroid2())) {
+            return true;
+        }
+        else if(Rect.intersects(player.getShip(), asteroid.getAsteroid3())) {
+            return true;
+        }
+        return false;
     }
 }

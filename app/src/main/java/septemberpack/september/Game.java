@@ -9,20 +9,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
-// Класс игры, в котором содержатся основные компоненты игры
-// Данный класс содержит лэйаут, на котором собраны все отображаемые компоненты, такие как
-// кнопка паузы, меню паузы, кнопки управления кораблем, добавление объекта класса GamePanel
-// для отображения графики
+/* Класс игры, в котором содержатся основные компоненты игры
+* Данный класс содержит лэйаут, на котором собраны все отображаемые компоненты, такие как
+* кнопка паузы, меню паузы, кнопки управления кораблем, добавление объекта класса GamePanel
+* для отображения графики
+*/
 
 public class Game extends Activity {
 
     View pauseBtn; // View кнопки пауза
     View pauseMenu; // View меню паузы
+    View losingMenu; // View меню проигрыша
     View leftBtn; // View кнопки влево
     View rightBtn; // View кнопки вправо
-    View ship; // View корабля
-    float X, MAX_WIDTH; // Стартовая координата корабля, максимальная ширина окна
     RelativeLayout Rel_main_game; // Основной лэйаут, на котором происходит игра
     GamePanel gamePanel; // Объект класса GamePanel
     public static MediaPlayer fonSong; // Объект для запуска музыки в игре
@@ -33,7 +34,6 @@ public class Game extends Activity {
         public void onClick(View v) {
             pauseMenu.setVisibility(View.GONE); // Прячем меню паузы
             pauseBtn.setVisibility(View.VISIBLE); // Показываем кнопку паузы
-            ship.setVisibility(View.VISIBLE); // Показываем корабль
             leftBtn.setVisibility(View.VISIBLE); // Показываем кнопку влево
             rightBtn.setVisibility(View.VISIBLE); // Показываем кнопку вправо
             gamePanel.Pause_game = false; // Флаг паузы на ноль - игра продолжается
@@ -54,7 +54,6 @@ public class Game extends Activity {
         @Override
         public void onClick(View v) {
             pauseBtn.setVisibility(View.GONE); // Прячем кнопку паузы
-            ship.setVisibility(View.GONE); // Прячем корабль
             leftBtn.setVisibility(View.GONE); // Прячем кнопку влево
             rightBtn.setVisibility(View.GONE); // Прячем кнопку вправо
             pauseMenu.setVisibility(View.VISIBLE); // Показывает меню паузы
@@ -92,9 +91,6 @@ public class Game extends Activity {
         DisplayMetrics dm = new DisplayMetrics();
         this.getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-        X = dm.widthPixels/2; // Точка старта игрока по x
-        MAX_WIDTH = dm.widthPixels - 100; // Максимальная ширина окна
-
         gamePanel = new GamePanel(this);
         Rel_main_game.addView(gamePanel);
 
@@ -108,19 +104,20 @@ public class Game extends Activity {
         Rel_main_game.addView(pauseBtn);
         pauseBtn.getLayoutParams().height = 200;
         pauseBtn.getLayoutParams().width = 200;
+        pauseBtn.setOnClickListener(PauseClick);
 
         // Меню паузы
         pauseMenu = myInflater.inflate(R.layout.pause_menu, null, false);
         Rel_main_game.addView(pauseMenu);
         pauseMenu.setVisibility(View.GONE);
 
+        // Кнопки меню паузы: продолжить и выйти в меню
         Button btnContinue = (Button) findViewById(R.id.btnContinue);
         Button btnGoMain = (Button) findViewById(R.id.btnGoMain);
 
         // Добавляем слушателей для меню паузы и кнопки паузы
         btnContinue.setOnClickListener(ContinueClick);
         btnGoMain.setOnClickListener(GoMainClick);
-        pauseBtn.setOnClickListener(PauseClick);
 
         // Кнопка влево
         leftBtn = myInflater.inflate(R.layout.turn_left, null, false);
@@ -129,6 +126,7 @@ public class Game extends Activity {
         Rel_main_game.addView(leftBtn);
         leftBtn.getLayoutParams().height = 150;
         leftBtn.getLayoutParams().width = 150;
+        leftBtn.setOnClickListener(LeftClick);
 
         // Кнопка вправо
         rightBtn = myInflater.inflate(R.layout.turn_right, null, false);
@@ -137,18 +135,16 @@ public class Game extends Activity {
         Rel_main_game.addView(rightBtn);
         rightBtn.getLayoutParams().height = 150;
         rightBtn.getLayoutParams().width = 150;
-
-        // Добавляем слушателей
-        leftBtn.setOnClickListener(LeftClick);
         rightBtn.setOnClickListener(RightClick);
 
-        // Корабль
-        ship = myInflater.inflate(R.layout.ship, null, false);
-        ship.setX(X);
-        ship.setY(dm.heightPixels - 300);
-        Rel_main_game.addView(ship);
-        ship.getLayoutParams().height = 80;
-        ship.getLayoutParams().width = 80;
+        // Меню проигрыша
+        losingMenu = myInflater.inflate(R.layout.losing_menu, null, false);
+        Rel_main_game.addView(losingMenu);
+        losingMenu.setVisibility(View.GONE);
+
+        // Кнопка меню проигрыша: выйти в меню
+        Button btnMainMenu = (Button) findViewById(R.id.btnMainMenu);
+        btnMainMenu.setOnClickListener(GoMainClick);
 
         // Инициализируем объект для музыки
         fonSong = MediaPlayer.create(Game.this, R.raw.fonsong);
@@ -156,15 +152,11 @@ public class Game extends Activity {
 
     // Метод движения влево
     public void moveLeft(){
-        if(X <= 0) X = 0;
-        else
-        ship.setX(X -= 40);
+        Player.left = true;
     }
 
     // Метод движения вправо
     public void moveRight(){
-        if(X >= (MAX_WIDTH)) X = MAX_WIDTH - 20;
-        else
-        ship.setX(X += 40);
+        Player.right = true;
     }
 }
