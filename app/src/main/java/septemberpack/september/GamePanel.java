@@ -3,7 +3,10 @@ package septemberpack.september;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -31,6 +34,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     private Background background; // Объект для обращения к фону
     private Asteroid asteroid; // Объект для обращения к классу астероида
     public static int speed = 10; // Скорость движение
+    public static int score = 0;
     private Player player;
 
     public GamePanel(Context context) {
@@ -55,6 +59,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
                 background.draw(canvas);
                 asteroid.draw(canvas);
                 player.draw(canvas);
+                drawText(canvas);
             }
     }
 
@@ -65,6 +70,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         if(collision()){
             Pause_game = true;
         }
+        score = speed - 10;
     }
 
     @Override
@@ -107,5 +113,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
             return true;
         }
         return false;
+    }
+
+    public void drawText(Canvas canvas){
+        Paint paint = new Paint();
+        paint.setColor(Color.rgb(68, 201, 235));
+        paint.setTextSize(72);
+        paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        canvas.drawText("Score: " + score, 500, 72, paint);
     }
 }

@@ -48,7 +48,7 @@ public class Player {
     }
 
     public Rect getShip(){
-        return new Rect(x, y, x + 80, y + 80);
+        return new Rect(x-10, y+30, x + 80, y + 80);
     }
 
 }

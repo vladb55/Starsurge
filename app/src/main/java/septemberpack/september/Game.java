@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 /* Класс игры, в котором содержатся основные компоненты игры
 * Данный класс содержит лэйаут, на котором собраны все отображаемые компоненты, такие как
@@ -19,14 +18,16 @@ import android.widget.Toast;
 
 public class Game extends Activity {
 
-    View pauseBtn; // View кнопки пауза
-    View pauseMenu; // View меню паузы
-    View losingMenu; // View меню проигрыша
-    View leftBtn; // View кнопки влево
-    View rightBtn; // View кнопки вправо
-    RelativeLayout Rel_main_game; // Основной лэйаут, на котором происходит игра
-    GamePanel gamePanel; // Объект класса GamePanel
+    private View pauseBtn; // View кнопки пауза
+    private View pauseMenu; // View меню паузы
+    private View losingMenu; // View меню проигрыша
+    private View leftBtn; // View кнопки влево
+    private View rightBtn; // View кнопки вправо
+    private RelativeLayout Rel_main_game; // Основной лэйаут, на котором происходит игра
+    private GamePanel gamePanel; // Объект класса GamePanel
     public static MediaPlayer fonSong; // Объект для запуска музыки в игре
+    private Button btnContinue;
+    private Button btnGoMain;
 
     // Обработчик нажатия на кнопку продолжить
     View.OnClickListener ContinueClick = new View.OnClickListener() {
@@ -112,8 +113,8 @@ public class Game extends Activity {
         pauseMenu.setVisibility(View.GONE);
 
         // Кнопки меню паузы: продолжить и выйти в меню
-        Button btnContinue = (Button) findViewById(R.id.btnContinue);
-        Button btnGoMain = (Button) findViewById(R.id.btnGoMain);
+        btnContinue = (Button) findViewById(R.id.btnContinue);
+        btnGoMain = (Button) findViewById(R.id.btnGoMain);
 
         // Добавляем слушателей для меню паузы и кнопки паузы
         btnContinue.setOnClickListener(ContinueClick);

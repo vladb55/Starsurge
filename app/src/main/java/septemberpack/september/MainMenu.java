@@ -29,6 +29,8 @@ public class MainMenu extends Activity {
             {
                 Intent intent = new Intent(MainMenu.this, Game.class); // Интент для перехода с меню в игру
                 startActivity(intent);
+                GamePanel.speed = 10;
+                GamePanel.score = 0;
             }
         });
     }
