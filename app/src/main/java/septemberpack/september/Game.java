@@ -20,7 +20,6 @@ public class Game extends Activity {
 
     private View pauseBtn; // View кнопки пауза
     private View pauseMenu; // View меню паузы
-    private View losingMenu; // View меню проигрыша
     private View leftBtn; // View кнопки влево
     private View rightBtn; // View кнопки вправо
     private RelativeLayout Rel_main_game; // Основной лэйаут, на котором происходит игра
@@ -37,6 +36,9 @@ public class Game extends Activity {
             pauseBtn.setVisibility(View.VISIBLE); // Показываем кнопку паузы
             leftBtn.setVisibility(View.VISIBLE); // Показываем кнопку влево
             rightBtn.setVisibility(View.VISIBLE); // Показываем кнопку вправо
+            if(gamePanel.gameFailed){
+                gamePanel.Pause_game = true;
+            }
             gamePanel.Pause_game = false; // Флаг паузы на ноль - игра продолжается
         }
     };
@@ -137,15 +139,6 @@ public class Game extends Activity {
         rightBtn.getLayoutParams().height = 150;
         rightBtn.getLayoutParams().width = 150;
         rightBtn.setOnClickListener(RightClick);
-
-        // Меню проигрыша
-        losingMenu = myInflater.inflate(R.layout.losing_menu, null, false);
-        Rel_main_game.addView(losingMenu);
-        losingMenu.setVisibility(View.GONE);
-
-        // Кнопка меню проигрыша: выйти в меню
-        Button btnMainMenu = (Button) findViewById(R.id.btnMainMenu);
-        btnMainMenu.setOnClickListener(GoMainClick);
 
         // Инициализируем объект для музыки
         fonSong = MediaPlayer.create(Game.this, R.raw.fonsong);
