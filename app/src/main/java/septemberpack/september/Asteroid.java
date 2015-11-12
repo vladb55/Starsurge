@@ -75,14 +75,14 @@ public class Asteroid {
     * Поскольку присутствуют всего три астероида, мы имеем возможность сделать для каждого свой метод
     */
     public Rect getAsteroid1(){
-        return new Rect(line1x, line1y, line1x + 120, line1y + 120);
+        return new Rect(line1x, line1y, line1x + 100, line1y + 120);
     }
 
     public Rect getAsteroid2(){
-        return new Rect(line2x, line2y, line2x + 120, line2y + 120);
+        return new Rect(line2x, line2y, line2x + 100, line2y + 120);
     }
 
     public Rect getAsteroid3(){
-        return new Rect(line3x, line3y, line3x + 120, line3y + 120);
+        return new Rect(line3x, line3y, line3x + 100, line3y + 120);
     }
 }

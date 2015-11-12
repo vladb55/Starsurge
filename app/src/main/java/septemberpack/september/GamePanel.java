@@ -38,6 +38,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     public static int best = 0;
     private Player player;
     private Paint paint;
+    public boolean gameFailed;
 
     public GamePanel(Context context) {
         super(context);
@@ -61,8 +62,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
                 background.draw(canvas);
                 asteroid.draw(canvas);
                 player.draw(canvas);
-                drawText(canvas);
+                drawScore(canvas);
             }
+        if(canvas != null) {
+            if (gameFailed) drawLoseText(canvas);
+        }
     }
 
     void Update(){
@@ -70,6 +74,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         asteroid.update();
         player.update();
         if(collision()){
+            gameFailed = true;
             Pause_game = true;
             setBest();
         }
@@ -126,13 +131,21 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
      * Выводит количество очков на экран
      * @param canvas - прямоугольная область экрана для рисования
      */
-    public void drawText(Canvas canvas){
+    private void drawScore(Canvas canvas){
         paint = new Paint();
         paint.setColor(Color.rgb(68, 201, 235));
         paint.setTextSize(72);
         paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         canvas.drawText("Score: " + score, 350, 72, paint);
         canvas.drawText("Best: " + best, 700, 72, paint);
+    }
+
+    private void drawLoseText(Canvas canvas){
+        paint = new Paint();
+        paint.setColor(Color.rgb(68, 201, 235));
+        paint.setTextSize(144);
+        paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        canvas.drawText("F A I L E D", 50, 700, paint);
     }
 
     private void setBest(){
