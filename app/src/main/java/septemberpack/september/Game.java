@@ -38,6 +38,7 @@ public class Game extends Activity {
             rightBtn.setVisibility(View.VISIBLE); // Показываем кнопку вправо
             if(gamePanel.gameFailed){
                 gamePanel.Pause_game = true;
+                btnContinue.setEnabled(false);
             }
             gamePanel.Pause_game = false; // Флаг паузы на ноль - игра продолжается
         }
