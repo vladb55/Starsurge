@@ -35,7 +35,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     private Asteroid asteroid; // Объект для обращения к классу астероида
     public static int speed = 10; // Скорость движение
     public static int score = 0;
+    public static int best = 0;
     private Player player;
+    private Paint paint;
 
     public GamePanel(Context context) {
         super(context);
@@ -69,6 +71,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         player.update();
         if(collision()){
             Pause_game = true;
+            setBest();
         }
         score = speed - 10;
     }
@@ -102,6 +105,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         }
     }
 
+    /**
+     * Проверяет объекты на соударение
+     * @return boolean
+     */
     public boolean collision(){
         if(Rect.intersects(player.getShip(), asteroid.getAsteroid1())) {
             return true;
@@ -115,11 +122,21 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         return false;
     }
 
+    /**
+     * Выводит количество очков на экран
+     * @param canvas - прямоугольная область экрана для рисования
+     */
     public void drawText(Canvas canvas){
-        Paint paint = new Paint();
+        paint = new Paint();
         paint.setColor(Color.rgb(68, 201, 235));
         paint.setTextSize(72);
         paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        canvas.drawText("Score: " + score, 500, 72, paint);
+        canvas.drawText("Score: " + score, 350, 72, paint);
+        canvas.drawText("Best: " + best, 700, 72, paint);
+    }
+
+    private void setBest(){
+        if(score > best)
+            best = score;
     }
 }

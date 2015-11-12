@@ -40,7 +40,7 @@ public class Asteroid {
 
         line1y = -random.nextInt(300);
         line2y = -random.nextInt(300)-400; // За пределом экрана минус 400
-        line3y = -random.nextInt(300)-700; // За пределом экрана минус 700
+        line3y = -random.nextInt(300)-800; // За пределом экрана минус 800
     }
 
     public void draw(Canvas canvas){
