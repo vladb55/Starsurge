@@ -32,15 +32,14 @@ public class Game extends Activity {
     View.OnClickListener ContinueClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            pauseMenu.setVisibility(View.GONE); // Прячем меню паузы
-            pauseBtn.setVisibility(View.VISIBLE); // Показываем кнопку паузы
-            leftBtn.setVisibility(View.VISIBLE); // Показываем кнопку влево
-            rightBtn.setVisibility(View.VISIBLE); // Показываем кнопку вправо
-            if(gamePanel.gameFailed){
-                gamePanel.Pause_game = true;
-                btnContinue.setEnabled(false);
+            if(!gamePanel.gameFailed) {
+                pauseMenu.setVisibility(View.GONE); // Прячем меню паузы
+                pauseBtn.setVisibility(View.VISIBLE); // Показываем кнопку паузы
+                leftBtn.setVisibility(View.VISIBLE); // Показываем кнопку влево
+                rightBtn.setVisibility(View.VISIBLE); // Показываем кнопку вправо
+                gamePanel.Pause_game = false; // Флаг паузы на ноль - игра продолжается
             }
-            gamePanel.Pause_game = false; // Флаг паузы на ноль - игра продолжается
+            else btnContinue.setEnabled(false);
         }
     };
 
