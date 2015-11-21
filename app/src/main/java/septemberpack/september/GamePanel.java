@@ -30,7 +30,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     public static final int HEIGHT = 1400; // Высота фона
 
     public MainThread thread; // Поток для отрисовки игрового процесса
-    public boolean Pause_game; // Флаг для проверки не стоит ли пауза
+    public boolean pauseGame; // Флаг для проверки не стоит ли пауза
     private Background background; // Объект для обращения к фону
     private Asteroid asteroid; // Объект для обращения к классу астероида
     public static int speed = 10; // Скорость движение
@@ -56,7 +56,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         final float scaleFactorX = getWidth()/(WIDTH*1.f); // Подстраивание фона под размер экрана по ширине
         final float scaleFactorY = getHeight()/(HEIGHT*1.f); // Подстраивание фона под размер экрана по высоте
 
-        if(!Pause_game) // Если не стоит пауза, рисуем
+        if(!pauseGame) // Если не стоит пауза, рисуем
             if(canvas != null) {
                 canvas.scale(scaleFactorX, scaleFactorY);
                 background.draw(canvas);
@@ -75,7 +75,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         player.update();
         if(collision()){
             gameFailed = true;
-            Pause_game = true;
+            pauseGame = true;
             setBest();
         }
         score = speed - 10;

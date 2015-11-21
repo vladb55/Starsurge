@@ -33,7 +33,7 @@ public class MainThread extends Thread {
     public void run(){
 
         while(running){
-            if(!gamePanel.Pause_game){ // Если не пауза, то работаем
+            if(!gamePanel.pauseGame){ // Если не пауза, то работаем
 
                 canvas = null;
                 try{

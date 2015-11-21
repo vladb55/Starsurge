@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -37,7 +38,7 @@ public class Game extends Activity {
                 pauseBtn.setVisibility(View.VISIBLE); // Показываем кнопку паузы
                 leftBtn.setVisibility(View.VISIBLE); // Показываем кнопку влево
                 rightBtn.setVisibility(View.VISIBLE); // Показываем кнопку вправо
-                gamePanel.Pause_game = false; // Флаг паузы на ноль - игра продолжается
+                gamePanel.pauseGame = false; // Флаг паузы на ноль - игра продолжается
             }
             else btnContinue.setEnabled(false);
         }
@@ -60,7 +61,7 @@ public class Game extends Activity {
             leftBtn.setVisibility(View.GONE); // Прячем кнопку влево
             rightBtn.setVisibility(View.GONE); // Прячем кнопку вправо
             pauseMenu.setVisibility(View.VISIBLE); // Показывает меню паузы
-            gamePanel.Pause_game = true; // Ставим игру на стоп
+            gamePanel.pauseGame = true; // Ставим игру на стоп
         }
     };
 
@@ -81,6 +82,31 @@ public class Game extends Activity {
             moveRight();
         }
     };
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+
+        if(keyCode == KeyEvent.KEYCODE_BACK)
+        {
+            if(!gamePanel.gameFailed) {
+                if (!gamePanel.pauseGame) {
+                    gamePanel.pauseGame = true;
+                    pauseBtn.setVisibility(View.GONE);
+                    leftBtn.setVisibility(View.GONE);
+                    rightBtn.setVisibility(View.GONE);
+                    pauseMenu.setVisibility(View.VISIBLE);
+                } else {
+                    gamePanel.pauseGame = false;
+                    pauseBtn.setVisibility(View.VISIBLE);
+                    leftBtn.setVisibility(View.VISIBLE);
+                    rightBtn.setVisibility(View.VISIBLE);
+                    pauseMenu.setVisibility(View.GONE);
+                }
+            }
+        }
+
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
