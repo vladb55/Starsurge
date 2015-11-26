@@ -9,6 +9,7 @@
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         <activity
             android:name=".MainMenu"
+            android:screenOrientation="portrait"
             android:label="@string/gameLabel">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,7 +18,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="septemberpack.september.Game">
+            android:name="septemberpack.september.Game"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 
