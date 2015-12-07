@@ -38,7 +38,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     public static int best = 0;
     private Player player;
     private Paint paint;
-    public boolean gameFailed; // Флаг для проверки на проигрыш игры
+    public boolean gameFailed;
 
     public GamePanel(Context context) {
         super(context);

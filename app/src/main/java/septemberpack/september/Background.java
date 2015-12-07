@@ -14,7 +14,7 @@ public class Background {
     Bitmap bitmap; // Объект нашего фона - картинка
     int x, y, dy; // Координата x, y для фона. Скорость движения фона
 
-    public Background(Bitmap bmp){
+    public Background(Bitmap bmp) {
         bitmap = bmp;
         x = 0;
         y = 0;
@@ -26,16 +26,16 @@ public class Background {
     // Иными словами, мы нарисовали фон по координатам (0, 0), сместили y,
     // Нарисовали на смещенном месте и опять сместили.
     // Создается впечатление, что фон плавно (в зависимости от устройства) движется вниз
-    public void draw(Canvas canvas){
+    public void draw(Canvas canvas) {
         if(canvas != null)
             canvas.drawBitmap(bitmap, x, y, null);
         if(y > 0)
-            canvas.drawBitmap(bitmap, x, y-1400, null);
+            canvas.drawBitmap(bitmap, x, y - 1400, null);
     }
 
     // Изменение координаты y
-    public void update(){
-        y+=dy;
+    public void update() {
+        y += dy;
         if(y > 1400) {
             y = 0;
             GamePanel.speed += 1;

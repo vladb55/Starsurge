@@ -11,7 +11,7 @@ public class Player {
 
     Bitmap bitmap;
 
-    int x, y;
+    static int x, y;
 
     public static boolean right = false;
     public static boolean left = false;
