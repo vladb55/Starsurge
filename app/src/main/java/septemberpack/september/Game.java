@@ -86,8 +86,7 @@ public class Game extends Activity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event){
 
-        if(keyCode == KeyEvent.KEYCODE_BACK)
-        {
+        if(keyCode == KeyEvent.KEYCODE_BACK) {
             if(!gamePanel.gameFailed) {
                 if (!gamePanel.pauseGame) {
                     gamePanel.pauseGame = true;
@@ -106,6 +105,12 @@ public class Game extends Activity {
         }
 
         return true;
+    }
+
+    @Override
+    protected void onUserLeaveHint(){
+        gamePanel.thread.setRunning(false);
+        Game.this.finish();
     }
 
     @Override
