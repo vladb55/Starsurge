@@ -7,27 +7,38 @@ import android.view.SurfaceHolder;
  * Created by Vlady on 10.10.2015.
  */
 
-// Данный класс представляет собой отдельный поток отрисовки
-
+/**
+ * Данный класс представляет собой отдельный поток отрисовки
+ */
 public class MainThread extends Thread {
 
     private SurfaceHolder surfaceHolder;
     private GamePanel gamePanel;
-    private boolean running; // Флаг, если true - поток работает, если false - поток завершен
-    public static Canvas canvas; // Класс-полотно, предоставляющий методы для рисования
+    private boolean running;
+    public static Canvas canvas;
 
+    /**
+     * Конструктор принимающий объект холдера и объект геймпенела
+     * @param holder - объект холдера для работы с полотном и синхронизации методов рисования
+     * @param gamePanel - объект с панелью для вызова методов рисования и их синхронизации
+     */
     public MainThread(SurfaceHolder holder, GamePanel gamePanel){
         super();
         this.surfaceHolder = holder;
         this.gamePanel = gamePanel;
     }
 
-    // Метод установки флага потока в активное состояние
+    /**
+     * Метод установки флага потока в активное состояние
+     * @param running = true - поток работает
+     */
     void setRunning(boolean running){
         this.running = running;
     }
 
-    // Метод, выполняющийся в потоке
+    /**
+     * Метод, выполняющийся в потоке
+     */
     @Override
     public void run(){
         while(running){
@@ -49,7 +60,6 @@ public class MainThread extends Thread {
                             surfaceHolder.unlockCanvasAndPost(canvas);
                         } catch(Exception e){}
                 }
-
             }
         }
     }
