@@ -30,7 +30,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     public static final int HEIGHT = 1400; // Высота фона
 
     public MainThread thread; // Поток для отрисовки игрового процесса
-    public boolean Pause_game; // Флаг для проверки не стоит ли пауза
+    public boolean pauseGame; // Флаг для проверки не стоит ли пауза
     private Background background; // Объект для обращения к фону
     private Asteroid asteroid; // Объект для обращения к классу астероида
     public static int speed = 10; // Скорость движение
@@ -38,6 +38,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     public static int best = 0;
     private Player player;
     private Paint paint;
+    public boolean gameFailed;
 
     public GamePanel(Context context) {
         super(context);
@@ -55,22 +56,26 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         final float scaleFactorX = getWidth()/(WIDTH*1.f); // Подстраивание фона под размер экрана по ширине
         final float scaleFactorY = getHeight()/(HEIGHT*1.f); // Подстраивание фона под размер экрана по высоте
 
-        if(!Pause_game) // Если не стоит пауза, рисуем
+        if(!pauseGame) // Если не стоит пауза, рисуем
             if(canvas != null) {
                 canvas.scale(scaleFactorX, scaleFactorY);
                 background.draw(canvas);
                 asteroid.draw(canvas);
                 player.draw(canvas);
-                drawText(canvas);
+                drawScore(canvas);
             }
+        if(canvas != null) {
+            if (gameFailed) drawLoseText(canvas);
+        }
     }
 
-    void Update()throws Exception{
+    void Update(){
         background.update();
         asteroid.update();
         player.update();
         if(collision()){
-            Pause_game = true;
+            gameFailed = true;
+            pauseGame = true;
             setBest();
         }
         score = speed - 10;
@@ -126,13 +131,21 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
      * Выводит количество очков на экран
      * @param canvas - прямоугольная область экрана для рисования
      */
-    public void drawText(Canvas canvas){
+    private void drawScore(Canvas canvas){
         paint = new Paint();
         paint.setColor(Color.rgb(68, 201, 235));
         paint.setTextSize(72);
         paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         canvas.drawText("Score: " + score, 350, 72, paint);
         canvas.drawText("Best: " + best, 700, 72, paint);
+    }
+
+    private void drawLoseText(Canvas canvas){
+        paint = new Paint();
+        paint.setColor(Color.rgb(68, 201, 235));
+        paint.setTextSize(144);
+        paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        canvas.drawText("F A I L E D", 50, 700, paint);
     }
 
     private void setBest(){

@@ -17,7 +17,6 @@ public class MainThread extends Thread {
     public static Canvas canvas; // Класс-полотно, предоставляющий методы для рисования
 
     public MainThread(SurfaceHolder holder, GamePanel gamePanel){
-
         super();
         this.surfaceHolder = holder;
         this.gamePanel = gamePanel;
@@ -31,9 +30,8 @@ public class MainThread extends Thread {
     // Метод, выполняющийся в потоке
     @Override
     public void run(){
-
         while(running){
-            if(!gamePanel.Pause_game){ // Если не пауза, то работаем
+            if(!gamePanel.pauseGame){ // Если не пауза, то работаем
 
                 canvas = null;
                 try{

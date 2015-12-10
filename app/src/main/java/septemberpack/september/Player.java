@@ -4,17 +4,14 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
-import junit.framework.TestCase;
-
 /**
  * Created by Vlady on 09.11.2015.
  */
 public class Player {
 
-
     Bitmap bitmap;
 
-    int x, y;
+    static int x, y;
 
     public static boolean right = false;
     public static boolean left = false;
@@ -51,7 +48,15 @@ public class Player {
     }
 
     public Rect getShip(){
-        return new Rect(x-10, y+30, x + 80, y + 80);
+        return new Rect(x, y+30, x + 80, y + 80);
+    }
+
+    public int getX(){
+        return x;
+    }
+
+    public int getY(){
+        return y;
     }
 
 }
