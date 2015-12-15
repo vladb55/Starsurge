@@ -36,6 +36,7 @@ public class Game extends Activity {
     public static ImageView imgAnim;
     private final static int DURATION = 50;
     private AnimationDrawable mAnimationDrawable = null;
+    private boolean checkAnim = true;
 
     /**
      * Обработчик нажатия на кнопку продолжить
@@ -223,8 +224,14 @@ public class Game extends Activity {
      */
     public void moveLeft(){
         Player.left = true;
-        if(gamePanel.gameFailed)
-        startFrameAnimation();
+        if(gamePanel.gameFailed && checkAnim) {
+            startFrameAnimation();
+            checkAnim = false;
+        }
+        else if(mAnimationDrawable.isRunning()) {
+            stopFrameAnimation();
+            checkAnim = false;
+        }
     }
 
     /**
@@ -232,8 +239,14 @@ public class Game extends Activity {
      */
     public void moveRight(){
         Player.right = true;
-        if((gamePanel.gameFailed) && (mAnimationDrawable.isRunning()))
-        stopFrameAnimation();
+        if(gamePanel.gameFailed && checkAnim) {
+            startFrameAnimation();
+            checkAnim = false;
+        }
+        else if(mAnimationDrawable.isRunning()) {
+            stopFrameAnimation();
+            checkAnim = false;
+        }
     }
 
     /**
@@ -241,7 +254,6 @@ public class Game extends Activity {
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public void startFrameAnimation() {
-        BitmapDrawable fire0 = (BitmapDrawable) getResources().getDrawable(R.drawable.fire0);
         BitmapDrawable fire1 = (BitmapDrawable) getResources().getDrawable(R.drawable.fire1);
         BitmapDrawable fire2 = (BitmapDrawable) getResources().getDrawable(R.drawable.fire2);
         BitmapDrawable fire3 = (BitmapDrawable) getResources().getDrawable(R.drawable.fire3);
@@ -262,7 +274,6 @@ public class Game extends Activity {
         BitmapDrawable fire18 = (BitmapDrawable) getResources().getDrawable(R.drawable.fire18);
         BitmapDrawable fire19 = (BitmapDrawable) getResources().getDrawable(R.drawable.fire19);
 
-        mAnimationDrawable.addFrame(fire0, DURATION);
         mAnimationDrawable.addFrame(fire1, DURATION);
         mAnimationDrawable.addFrame(fire2, DURATION);
         mAnimationDrawable.addFrame(fire3, DURATION);

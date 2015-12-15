@@ -58,7 +58,7 @@ public class Player {
             if(x >= GamePanel.WIDTH - 100)
                 x = GamePanel.WIDTH - 100;
             else {
-                x += 40;
+                x += 80;
             }
             right = false;
         }
@@ -67,7 +67,7 @@ public class Player {
             if(x <= 0)
                 x = 0;
             else {
-                x -= 40;
+                x -= 80;
             }
             left = false;
         }
