@@ -160,11 +160,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
      * @param canvas - прямоугольная область экрана для рисования
      */
     private void drawLoseText(Canvas canvas){
-        paint = new Paint();
-        paint.setColor(Color.rgb(68, 201, 235));
-        paint.setTextSize(144);
-        paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        canvas.drawText("F A I L E D", 200, 700, paint);
+        if(!pauseGame) {
+            paint = new Paint();
+            paint.setColor(Color.rgb(68, 201, 235));
+            paint.setTextSize(144);
+            paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+            canvas.drawText("F A I L E D", 200, 700, paint);
+        }
     }
 
     /**
@@ -196,8 +198,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     private void fail(){
         if(collision()){
             gameFailed = true;
-            explosion = new Explosion(BitmapFactory.decodeResource(getResources(),R.drawable.explosion),player.getX(),
-                    player.getY()-30, 100, 100, 25);
+            explosion = new Explosion(BitmapFactory.decodeResource(getResources(), R.drawable.explosion), player.getX(),
+                    player.getY() - 30, 100, 100, 25);
             stopMusic();
             setBest();
         }

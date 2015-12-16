@@ -16,10 +16,20 @@ public class Explosion {
     private int width;
     private int height;
     private int row;
-    private Animation animation = new Animation();
+    private Animation animation;
     private Bitmap bitmap;
 
+    /**
+     * Конструктор, инициализируем массив с кадрами анимации, задаем задержку между кадрами
+     * @param bmp - картинка со взрывами
+     * @param x - позиция по х
+     * @param y - позиция по у
+     * @param w - ширина
+     * @param h - высота
+     * @param numFrames - количество кадров
+     */
     public Explosion(Bitmap bmp, int x, int y, int w, int h, int numFrames){
+        animation = new Animation();
         this.x = x;
         this.y = y;
         this.width = w;
@@ -37,17 +47,28 @@ public class Explosion {
         animation.setDelay(10);
     }
 
+    /**
+     * Метод отрисовки графики
+     * @param canvas - прямоугольная область экрана для рисования
+     */
     public void draw(Canvas canvas){
         if(!animation.playedOnce()){
             canvas.drawBitmap(animation.getImage(), x, y, null);
         }
     }
 
+    /**
+     * Обновление кадра
+     */
     public void update(){
         if(!animation.playedOnce()){
             animation.update();
         }
     }
 
+    /**
+     * Метод возвращающий высоту кадра
+     * @return - высота кадра
+     */
     public int getHeight(){return height;}
 }
