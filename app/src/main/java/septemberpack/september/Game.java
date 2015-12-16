@@ -33,10 +33,6 @@ public class Game extends Activity {
     public static MediaPlayer fonSong; // Объект для запуска музыки в игре
     private Button btnContinue;
     private Button btnGoMain;
-    public static ImageView imgAnim;
-    private final static int DURATION = 50;
-    private AnimationDrawable mAnimationDrawable = null;
-    private boolean checkAnim = true;
 
     /**
      * Обработчик нажатия на кнопку продолжить
@@ -210,13 +206,6 @@ public class Game extends Activity {
          * Инициализируем объект для музыки
          */
         fonSong = MediaPlayer.create(Game.this, R.raw.fonsong);
-
-        /**
-         * Инициализиция объекта для анимации
-         */
-        imgAnim = new ImageView(getApplicationContext());
-        mAnimationDrawable = new AnimationDrawable();
-        Rel_main_game.addView(imgAnim);
     }
 
     /**
@@ -224,14 +213,6 @@ public class Game extends Activity {
      */
     public void moveLeft(){
         Player.left = true;
-        if(gamePanel.gameFailed && checkAnim) {
-            startFrameAnimation();
-            checkAnim = false;
-        }
-        else if(mAnimationDrawable.isRunning()) {
-            stopFrameAnimation();
-            checkAnim = false;
-        }
     }
 
     /**
@@ -239,81 +220,6 @@ public class Game extends Activity {
      */
     public void moveRight(){
         Player.right = true;
-        if(gamePanel.gameFailed && checkAnim) {
-            startFrameAnimation();
-            checkAnim = false;
-        }
-        else if(mAnimationDrawable.isRunning()) {
-            stopFrameAnimation();
-            checkAnim = false;
-        }
-    }
-
-    /**
-     * Метод в котором происходит создание анимации и ее отрисовка
-     */
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    public void startFrameAnimation() {
-        BitmapDrawable fire1 = (BitmapDrawable) getResources().getDrawable(R.drawable.fire1);
-        BitmapDrawable fire2 = (BitmapDrawable) getResources().getDrawable(R.drawable.fire2);
-        BitmapDrawable fire3 = (BitmapDrawable) getResources().getDrawable(R.drawable.fire3);
-        BitmapDrawable fire4 = (BitmapDrawable) getResources().getDrawable(R.drawable.fire4);
-        BitmapDrawable fire5 = (BitmapDrawable) getResources().getDrawable(R.drawable.fire5);
-        BitmapDrawable fire6 = (BitmapDrawable) getResources().getDrawable(R.drawable.fire6);
-        BitmapDrawable fire7 = (BitmapDrawable) getResources().getDrawable(R.drawable.fire7);
-        BitmapDrawable fire8 = (BitmapDrawable) getResources().getDrawable(R.drawable.fire8);
-        BitmapDrawable fire9 = (BitmapDrawable) getResources().getDrawable(R.drawable.fire9);
-        BitmapDrawable fire10 = (BitmapDrawable) getResources().getDrawable(R.drawable.fire10);
-        BitmapDrawable fire11 = (BitmapDrawable) getResources().getDrawable(R.drawable.fire11);
-        BitmapDrawable fire12 = (BitmapDrawable) getResources().getDrawable(R.drawable.fire12);
-        BitmapDrawable fire13 = (BitmapDrawable) getResources().getDrawable(R.drawable.fire13);
-        BitmapDrawable fire14 = (BitmapDrawable) getResources().getDrawable(R.drawable.fire14);
-        BitmapDrawable fire15 = (BitmapDrawable) getResources().getDrawable(R.drawable.fire15);
-        BitmapDrawable fire16 = (BitmapDrawable) getResources().getDrawable(R.drawable.fire16);
-        BitmapDrawable fire17 = (BitmapDrawable) getResources().getDrawable(R.drawable.fire17);
-        BitmapDrawable fire18 = (BitmapDrawable) getResources().getDrawable(R.drawable.fire18);
-        BitmapDrawable fire19 = (BitmapDrawable) getResources().getDrawable(R.drawable.fire19);
-
-        mAnimationDrawable.addFrame(fire1, DURATION);
-        mAnimationDrawable.addFrame(fire2, DURATION);
-        mAnimationDrawable.addFrame(fire3, DURATION);
-        mAnimationDrawable.addFrame(fire4, DURATION);
-        mAnimationDrawable.addFrame(fire5, DURATION);
-        mAnimationDrawable.addFrame(fire6, DURATION);
-        mAnimationDrawable.addFrame(fire7, DURATION);
-        mAnimationDrawable.addFrame(fire8, DURATION);
-        mAnimationDrawable.addFrame(fire9, DURATION);
-        mAnimationDrawable.addFrame(fire10, DURATION);
-        mAnimationDrawable.addFrame(fire11, DURATION);
-        mAnimationDrawable.addFrame(fire12, DURATION);
-        mAnimationDrawable.addFrame(fire13, DURATION);
-        mAnimationDrawable.addFrame(fire14, DURATION);
-        mAnimationDrawable.addFrame(fire15, DURATION);
-        mAnimationDrawable.addFrame(fire16, DURATION);
-        mAnimationDrawable.addFrame(fire17, DURATION);
-        mAnimationDrawable.addFrame(fire18, DURATION);
-        mAnimationDrawable.addFrame(fire19, DURATION);
-
-        imgAnim.setBackground(mAnimationDrawable);
-        mAnimationDrawable.setOneShot(true);
-
-        imgAnim.setX(Player.x - 160);
-        imgAnim.setY(Player.y - 100);
-
-        if (!mAnimationDrawable.isRunning()) {
-            mAnimationDrawable.setVisible(true, true);
-            mAnimationDrawable.start();
-        }
-    }
-
-    /**
-     * Метод останавливающий отрисовку анимации
-     */
-    private void stopFrameAnimation() {
-        if (mAnimationDrawable.isRunning()) {
-            mAnimationDrawable.stop();
-            mAnimationDrawable.setVisible(false, false);
-        }
     }
 
     /**

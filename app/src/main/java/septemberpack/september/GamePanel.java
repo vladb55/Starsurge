@@ -38,6 +38,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     public static int best = 0;
     private Paint paint;
     public boolean gameFailed;
+    private Explosion explosion;
 
     /**
      * Конструктор получающий объект холдера для работы с полотном
@@ -72,7 +73,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
                 drawScore(canvas);
             }
         if(canvas != null) {
-            if (gameFailed) drawLoseText(canvas);
+            if (gameFailed) {
+                drawLoseText(canvas);
+                explosion.draw(canvas);
+            }
         }
     }
 
@@ -80,11 +84,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
      * Метод выполняющий обновление координат объектов на экране
      */
     void Update(){
-        background.update();
-        asteroid.update();
-        player.update();
-        fail();
-        score = speed - 10;
+        if(!gameFailed) {
+            background.update();
+            asteroid.update();
+            player.update();
+            fail();
+            score = speed - 10;
+        }
+        else {
+            explosion.update();
+        }
+
     }
 
     @Override
@@ -154,7 +164,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         paint.setColor(Color.rgb(68, 201, 235));
         paint.setTextSize(144);
         paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        canvas.drawText("F A I L E D", 50, 700, paint);
+        canvas.drawText("F A I L E D", 200, 700, paint);
     }
 
     /**
@@ -186,7 +196,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     private void fail(){
         if(collision()){
             gameFailed = true;
-            pauseGame = true;
+            explosion = new Explosion(BitmapFactory.decodeResource(getResources(),R.drawable.explosion),player.getX(),
+                    player.getY()-30, 100, 100, 25);
             stopMusic();
             setBest();
         }
