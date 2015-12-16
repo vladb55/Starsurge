@@ -10,26 +10,38 @@ import java.util.Random;
  * Created by Vlady on 22.10.2015.
  */
 
-// Данный класс реализует отрисовку астероидов
-
+/**
+ * Данный класс реализует отрисовку астероидов
+ */
 public class Asteroid {
 
     Bitmap bitmap;
 
-    // Первый астероид
+    /**
+     * Координаты первого астероида
+     */
     private int line1x;
     private int line1y;
 
-    // Второй астероид
+    /**
+     * Координаты второго астероида
+     */
     private int line2x;
     private int line2y;
 
-    // Третий астероид
+    /**
+     * Координаты третьего астероида
+     */
     private int line3x;
     private int line3y;
 
     private Random random;
 
+    /**
+     * Конструктор получающий объект картинки будущего астероида и
+     * задающий астероидам рандомные координаты
+     * @param bmp - объект картинки астероида
+     */
     public Asteroid(Bitmap bmp){
         this.bitmap = bmp;
         random = new Random();
@@ -43,13 +55,19 @@ public class Asteroid {
         line3y = -random.nextInt(300)-800; // За пределом экрана минус 800
     }
 
+    /**
+     * Метод отрисовки астероидов
+     * @param canvas - прямоугольная область экрана для рисования
+     */
     public void draw(Canvas canvas){
-
         canvas.drawBitmap(bitmap, line1x, line1y, null); // Первая линия
         canvas.drawBitmap(bitmap, line2x, line2y, null); // Вторая линия
         canvas.drawBitmap(bitmap, line3x, line3y, null); // Третья линия
     }
 
+    /**
+     * Метод обновляющий координаты астероидов и задающий новые координаты при уплытии за границы фона
+     */
     public void update(){
         if(line1y > 1400) {
             line1y = -80;

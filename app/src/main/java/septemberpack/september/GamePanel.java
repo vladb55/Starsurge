@@ -23,7 +23,6 @@ import android.view.SurfaceView;
 * Этот интерфейс предлагает реализовать три метода: surfaceCreated(), surfaceChanged() и surfaceDestroyed()
 * вызываемые соответственно при создании области для рисования, ее изменении и разрушении.
 */
-
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
     public static final int WIDTH = 1000; // Ширина фона
@@ -33,13 +32,18 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     public boolean pauseGame; // Флаг для проверки не стоит ли пауза
     private Background background; // Объект для обращения к фону
     private Asteroid asteroid; // Объект для обращения к классу астероида
+    private Player player; // Объект для обращения к классу корабля
     public static int speed = 10; // Скорость движение
     public static int score = 0;
     public static int best = 0;
-    private Player player;
     private Paint paint;
     public boolean gameFailed;
+    private Explosion explosion;
 
+    /**
+     * Конструктор получающий объект холдера для работы с полотном
+     * @param context - активити с которым работаем
+     */
     public GamePanel(Context context) {
         super(context);
         getHolder().addCallback(this);
@@ -51,12 +55,16 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         return super.onTouchEvent(event);
     }
 
+    /**
+     * Метод отрисовки графики
+     * @param canvas - прямоугольная область экрана для рисования
+     */
     void Draw(Canvas canvas){
 
-        final float scaleFactorX = getWidth()/(WIDTH*1.f); // Подстраивание фона под размер экрана по ширине
-        final float scaleFactorY = getHeight()/(HEIGHT*1.f); // Подстраивание фона под размер экрана по высоте
+        final float scaleFactorX = getWidth() / (WIDTH * 1.f); // Подстраивание фона под размер экрана по ширине
+        final float scaleFactorY = getHeight() / (HEIGHT * 1.f); // Подстраивание фона под размер экрана по высоте
 
-        if(!pauseGame) // Если не стоит пауза, рисуем
+        if(!pauseGame)
             if(canvas != null) {
                 canvas.scale(scaleFactorX, scaleFactorY);
                 background.draw(canvas);
@@ -65,27 +73,34 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
                 drawScore(canvas);
             }
         if(canvas != null) {
-            if (gameFailed) drawLoseText(canvas);
+            if (gameFailed) {
+                drawLoseText(canvas);
+                explosion.draw(canvas);
+            }
         }
     }
 
+    /**
+     * Метод выполняющий обновление координат объектов на экране
+     */
     void Update(){
-        background.update();
-        asteroid.update();
-        player.update();
-        if(collision()){
-            gameFailed = true;
-            pauseGame = true;
-            setBest();
+        if(!gameFailed) {
+            background.update();
+            asteroid.update();
+            player.update();
+            fail();
+            score = speed - 10;
         }
-        score = speed - 10;
+        else {
+            explosion.update();
+        }
+
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         thread = new MainThread(getHolder(), this);
-        Game.fonSong.start();
-        Game.fonSong.setLooping(true);
+        playMusic();
         background = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.sky));
         asteroid = new Asteroid(BitmapFactory.decodeResource(getResources(), R.drawable.asteroid120px));
         player = new Player(BitmapFactory.decodeResource(getResources(), R.drawable.ship));
@@ -104,7 +119,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         while(retry){
             try{
                 thread.join();
-                Game.fonSong.reset();
+                stopMusic();
                 retry = false;
             } catch(InterruptedException ex){}
         }
@@ -140,16 +155,51 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         canvas.drawText("Best: " + best, 700, 72, paint);
     }
 
+    /**
+     * Метод выводящий сообщение о проигрыше
+     * @param canvas - прямоугольная область экрана для рисования
+     */
     private void drawLoseText(Canvas canvas){
         paint = new Paint();
         paint.setColor(Color.rgb(68, 201, 235));
         paint.setTextSize(144);
         paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        canvas.drawText("F A I L E D", 50, 700, paint);
+        canvas.drawText("F A I L E D", 200, 700, paint);
     }
 
+    /**
+     * Метод устанавливающий лучший результат
+     */
     private void setBest(){
         if(score > best)
             best = score;
+    }
+
+    /**
+     * Метод запуска музыки
+     */
+    public void playMusic(){
+        Game.fonSong.start();
+        Game.fonSong.setLooping(true);
+    }
+
+    /**
+     * Метод остановки музыки
+     */
+    private void stopMusic(){
+        Game.fonSong.reset();
+    }
+
+    /**
+     * Метод проверки на проигрыш
+     */
+    private void fail(){
+        if(collision()){
+            gameFailed = true;
+            explosion = new Explosion(BitmapFactory.decodeResource(getResources(),R.drawable.explosion),player.getX(),
+                    player.getY()-30, 100, 100, 25);
+            stopMusic();
+            setBest();
+        }
     }
 }
