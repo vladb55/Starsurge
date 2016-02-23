@@ -52,6 +52,7 @@ public class Background {
         if(y > 1400) {
             y = 0;
             GamePanel.speed += 1;
+            GamePanel.score += 1;
         }
     }
 

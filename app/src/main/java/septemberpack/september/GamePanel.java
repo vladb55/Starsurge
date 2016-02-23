@@ -33,12 +33,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     private Background background; // Объект для обращения к фону
     private Asteroid asteroid; // Объект для обращения к классу астероида
     private Player player; // Объект для обращения к классу корабля
+    private Explosion explosion;
+    private Bonus bonus;
     public static int speed = 10; // Скорость движение
     public static int score = 0;
     public static int best = 0;
     private Paint paint;
     public boolean gameFailed;
-    private Explosion explosion;
+
 
     /**
      * Конструктор получающий объект холдера для работы с полотном
@@ -70,6 +72,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
                 background.draw(canvas);
                 asteroid.draw(canvas);
                 player.draw(canvas);
+                bonus.draw(canvas);
                 drawScore(canvas);
             }
         if(canvas != null) {
@@ -88,8 +91,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
             background.update();
             asteroid.update();
             player.update();
-            fail();
-            score = speed - 10;
+            bonus.update();
+            checkCollision();
         }
         else {
             explosion.update();
@@ -102,8 +105,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         thread = new MainThread(getHolder(), this);
         playMusic();
         background = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.sky));
-        asteroid = new Asteroid(BitmapFactory.decodeResource(getResources(), R.drawable.asteroid120px));
+        asteroid = new Asteroid(BitmapFactory.decodeResource(getResources(), R.drawable.asteroid));
         player = new Player(BitmapFactory.decodeResource(getResources(), R.drawable.ship));
+        bonus = new Bonus(BitmapFactory.decodeResource(getResources(), R.drawable.bonus));
         thread.setRunning(true);
         thread.start();
     }
@@ -137,6 +141,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
             return true;
         }
         else if(Rect.intersects(player.getShip(), asteroid.getAsteroid3())) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean bonusTaken(){
+        if(Rect.intersects(player.getShip(), bonus.getBonus())) {
             return true;
         }
         return false;
@@ -195,13 +206,16 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     /**
      * Метод проверки на проигрыш
      */
-    private void fail(){
+    private void checkCollision(){
         if(collision()){
             gameFailed = true;
             explosion = new Explosion(BitmapFactory.decodeResource(getResources(), R.drawable.explosion), player.getX(),
                     player.getY() - 30, 100, 100, 25);
             stopMusic();
             setBest();
+        }
+        if(bonusTaken()){
+            score += 10;
         }
     }
 }
