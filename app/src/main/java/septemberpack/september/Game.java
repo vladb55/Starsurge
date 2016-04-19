@@ -3,6 +3,8 @@ package septemberpack.september;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
@@ -24,6 +26,10 @@ import android.widget.RelativeLayout;
  */
 public class Game extends Activity {
 
+    public static final String APP_PREFERENCES = "mysettings";
+    public static final String APP_PREFERENCES_COUNTER = "scores";
+
+    private SharedPreferences mSettings;
     private View pauseBtn; // View кнопки пауза
     private View pauseMenu; // View меню паузы
     private View leftBtn; // View кнопки влево
@@ -130,11 +136,14 @@ public class Game extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game);
+        mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
         /**
          * Основной лэйаут, на который добавляются все игровые компоненты
          */
         Rel_main_game = (RelativeLayout) findViewById(R.id.main_game_rl);
+
+
 
         /**
          * Получаем размеры окна
@@ -155,10 +164,8 @@ public class Game extends Activity {
          */
         pauseBtn = myInflater.inflate(R.layout.pause, null, false);
         pauseBtn.setX(0);
-        pauseBtn.setY(-50);
+        pauseBtn.setY(0);
         Rel_main_game.addView(pauseBtn);
-        pauseBtn.getLayoutParams().height = 200;
-        pauseBtn.getLayoutParams().width = 200;
         pauseBtn.setOnClickListener(PauseClick);
 
         /**
@@ -206,6 +213,24 @@ public class Game extends Activity {
          * Инициализируем объект для музыки
          */
         fonSong = MediaPlayer.create(Game.this, R.raw.fonsong);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Запоминаем данные
+        SharedPreferences.Editor editor = mSettings.edit();
+        editor.putInt(APP_PREFERENCES_COUNTER, GamePanel.best);
+        editor.apply();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (mSettings.contains(APP_PREFERENCES_COUNTER)) {
+            GamePanel.best = mSettings.getInt(APP_PREFERENCES_COUNTER, 0);
+        }
     }
 
     /**

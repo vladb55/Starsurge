@@ -96,6 +96,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         }
         else {
             explosion.update();
+            setBest();
+            stopMusic();
         }
 
     }
@@ -211,8 +213,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
             gameFailed = true;
             explosion = new Explosion(BitmapFactory.decodeResource(getResources(), R.drawable.explosion), player.getX(),
                     player.getY() - 30, 100, 100, 25);
-            stopMusic();
-            setBest();
         }
         if(bonusTaken()){
             score += 10;
