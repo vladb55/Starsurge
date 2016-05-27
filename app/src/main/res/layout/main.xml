@@ -14,9 +14,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
-        android:textColor="#44c9eb"
+        android:textColor="#ebc944"
         android:background="#00000000"
-        android:textSize="48sp"
+        android:textSize="56sp"
         android:text="@string/newgame_str" />
 
     <ImageView
