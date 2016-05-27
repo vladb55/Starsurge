@@ -178,7 +178,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
             paint.setColor(Color.rgb(68, 201, 235));
             paint.setTextSize(144);
             paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-            canvas.drawText("F A I L E D", 200, 700, paint);
+            canvas.drawText("ПОТРАЧЕНО", 200, 700, paint);
         }
     }
 
