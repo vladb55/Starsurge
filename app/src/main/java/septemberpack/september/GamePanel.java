@@ -35,7 +35,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     private Player player; // Объект для обращения к классу корабля
     private Explosion explosion;
     private Bonus bonus;
-    public static int speed = 10; // Скорость движение
+    public static int speed = 20; // Скорость движение
     public static int score = 0;
     public static int best = 0;
     private Paint paint;
